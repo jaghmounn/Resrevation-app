@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une salle</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+   
+    
+        <title>Ajouter une salle</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: url('/images/aza.jpeg') no-repeat center center fixed; 
+                background-size: cover;
+            }
+    
+            form {
+                background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.3);
+                width: 300px;
+            }
+    
+            label {
+                margin-bottom: 10px;
+                display: block;
+                color: #333;
+            }
+    
+            input[type="text"],
+            input[type="number"] {
+                width: calc(100% - 22px);
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+    
+            input[type="checkbox"] {
+                margin-right: 10px;
+            }
+    
+            button {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                background-color: #4CAF50; /* Green */
+                color: white;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+    
+            button:hover {
+                background-color: #45a049; /* Darker green */
+            }
+        </style>
+    </head>
+    <body>
+        <form id="addRoomForm">
+            <label for="nom">Nom de la salle:</label>
+            <input type="text" id="nom" name="nom" required><br>
+            <label for="capacite">Capacité:</label>
+            <input type="number" id="capacite" name="capacite"><br>
+            <label for="dispo">Disponible:</label>
+            <input type="checkbox" id="dispo" name="dispo" checked><br>
+            <button type="submit">Ajouter</button>
+        </form>
+    </body>
+    </html>
+    
+    
+    <script>
+document.getElementById('addRoomForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const nom = document.getElementById('nom').value;
+    const capacite = document.getElementById('capacite').value;
+    const dispo = document.getElementById('dispo').checked;
+
+    const salleData = {
+        nom,
+        capacite,
+        dispo
+    };
+
+    try {
+        const response = await fetch('/api/salles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(salleData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de l\'ajout de la salle');
+        }
+
+        alert('Salle ajoutée avec succès!');
+        // Réinitialiser le formulaire si nécessaire
+        window.location.href = '/api/salles';
+
+    } catch (error) {
+        console.error(error);
+        alert('Une erreur est survenue lors de l\'ajout de la salle');
+    }
+});
+
+
+
+    </script>
+</body>
+</html>

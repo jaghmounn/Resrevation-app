@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des salles</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+button + button {
+    margin-left: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Liste des salles</h1>
+    <a href="/api/salles/add/form">Ajouter une salle</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la salle</th>
+                <th>Capacité</th>
+                <th>Disponible</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% salles.forEach(function(salle) { %>
+                <tr>
+                    <td><%= salle.nom %></td>
+                    <td><%= salle.capacite %></td>
+                    <td><%= salle.dispo ? 'Oui' : 'Non' %></td>
+                    <td>
+                        <button onclick="editSalle('<%= salle._id %>')">Modifier</button>
+                        <button onclick="deleteSalle('<%= salle._id %>')">Supprimer</button>
+                        <button onclick="window.location.href='/api/reservations/add/<%= salle._id %>'" <%= salle.dispo ? '' : 'disabled' %> >Add Reservation</button>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <script>
+        function editSalle(id) {
+            window.location.href = `/api/salles/update/form/${id}`;
+        }
+
+        function deleteSalle(id) {
+                fetch(`/api/salles/${id}`, { method: "DELETE" })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur lors de la suppression de la salle');
+                        }
+
+                        alert('Salle supprimée avec succès!');
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert('Une erreur est survenue lors de la suppression de la salle');
+                    });
+        }
+    </script>
+</body>
+</html>

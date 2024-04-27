@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Reservation</title>
+    <!-- Include any necessary CSS files for date picker here -->
+</head>
+
+    <title>Add Reservation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            width: 350px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form id="addReservationForm" action="/api/reservations" method="POST">
+        <h1>Add Reservation</h1>
+        <input type="hidden" id="salleId" name="salleId" value="<%= salle._id %>">
+        <div>
+            <label for="salleName">Room Name: <%= salle.nom %></label>
+        </div>
+        <div>
+            <label for="startTime">Start Time:</label>
+            <input type="datetime-local" id="startTime" name="startTime" required>
+        </div>
+        <div>
+            <label for="endTime">End Time:</label>
+            <input type="datetime-local" id="endTime" name="endTime" required>
+        </div>
+        <button type="submit">Add Reservation</button>
+    </form>
+</body>
+</html>
+
+
+    <!-- Include any necessary JavaScript files for date picker here -->
+   
+</body>
+</html>

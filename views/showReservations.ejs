@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des réservations</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+button + button {
+    margin-left: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Liste des réservations</h1>
+    <a href="/api/salles">Voir Salles</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la salle</th>
+                <th>Capacite de la salle</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reservations.forEach(function(reservation) { %>
+                <tr>
+                    <td><%= reservation.salleId.nom %></td>
+                    <td><%= reservation.salleId.capacite %></td>
+                    <td>
+                        <%= reservation.startTime.getDate() %>/<%= reservation.startTime.getMonth()+1 %>/<%= reservation.startTime.getFullYear() %> <%= reservation.startTime.getHours() %>:<%= reservation.startTime.getMinutes() %>:<%= reservation.startTime.getSeconds() %>
+                    </td>
+                    <td>
+                        <%= reservation.endTime.getDate() %>/<%= reservation.endTime.getMonth()+1 %>/<%= reservation.endTime.getFullYear() %> <%= reservation.endTime.getHours() %>:<%= reservation.endTime.getMinutes() %> %>
+                    </td>
+                    <td>
+                        <button onclick="deleteReservation('<%= reservation._id %>')">Supprimer</button>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+<script>
+    function deleteReservation(id) {
+        if (confirm('Voulez-vous vraiment supprimer cette réservation ?')) {
+            fetch(
+                `/api/reservations/${id}`,
+                {
+                    method: 'DELETE'
+                }
+            ).then(function() {
+                window.location.reload();
+            });
+        }
+    }
+</script>
+</body>
+</html>

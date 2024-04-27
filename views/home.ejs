@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/images/aza.jpeg');
+            background-color: aqua;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .button {
+            background-color: #af814c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons">
+        <a href="/api/users/signup" class="button">S'inscrire</a>
+        <a href="/api/users/login" class="button">Se connecter</a>
+    </div>
+</body>
+</html>

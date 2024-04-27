@@ -1,0 +1,20 @@
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
+
+isLoggedIn = async (req, res, next) => {
+  const ch= req.get("cookie") 
+  const token = ch.substr(ch.indexOf("=")+1 , ch.length-ch.indexOf("=") ) ; 
+  try {
+    const user = jwt.verify(token, process.env.SECRET_KEY);
+    req.user = user;
+    console.log(req.user)
+    next();
+  } catch (err) {
+    res.clearCookie("token");
+    return res.redirect("/");
+  }   
+   
+  
+  } 
+;
+module.exports = {isLoggedIn};
